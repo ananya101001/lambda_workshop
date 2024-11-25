@@ -1,3 +1,5 @@
+
+
 {
-  "query": { "text": "serverless iopipe performance metrics workshop lambda amazon" }
+  "queryStringParameters": {"text": "wow such serverless very lambda"}
 }

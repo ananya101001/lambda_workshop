@@ -1,0 +1,293 @@
+{
+  "/Users/akshashe/Documents/Enterprise SW /lambda-workshop": {
+    "versionSfCore": null,
+    "versionFramework": "4.4.11",
+    "isWithinCompose": false,
+    "isCompose": false,
+    "composeOrgName": null,
+    "composeResolverProviders": {
+      "opt": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "your-service-name",
+            "frameworkVersion": "4",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs18.x",
+              "stage": "dev",
+              "region": "us-east-1",
+              "versionFunctions": true
+            },
+            "functions": {
+              "create": {
+                "handler": "handler.create",
+                "events": [
+                  {
+                    "http": {
+                      "path": "test-url",
+                      "method": "get"
+                    }
+                  }
+                ],
+                "name": "your-service-name-dev-create"
+              }
+            },
+            "resources": {
+              "Resources": {
+                "DogeBucket": {
+                  "Type": "AWS::S3::Bucket",
+                  "Properties": {
+                    "BucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10"
+                  }
+                }
+              },
+              "Outputs": {
+                "DogeBucketName": {
+                  "Value": {
+                    "Ref": "DogeBucket"
+                  },
+                  "Export": {
+                    "Name": "DogeBucketName"
+                  }
+                }
+              }
+            },
+            "custom": {
+              "s3Sync": [
+                {
+                  "bucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10",
+                  "localDir": "./"
+                }
+              ]
+            },
+            "plugins": [
+              "serverless-s3-sync"
+            ]
+          },
+          "configFileDirPath": "/Users/akshashe/Documents/Enterprise SW /lambda-workshop",
+          "config": {
+            "type": "opt"
+          },
+          "options": {
+            "function": "hello",
+            "path": "event.json"
+          },
+          "logger": {
+            "namespace": "s:core:resolver:opt",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      },
+      "default-aws-credential-resolver": "<REDACTED>",
+      "sls": {
+        "instance": {
+          "credentials": "<REDACTED>",
+          "serviceConfigFile": {
+            "service": "your-service-name",
+            "frameworkVersion": "4",
+            "provider": {
+              "name": "aws",
+              "runtime": "nodejs18.x",
+              "stage": "dev",
+              "region": "us-east-1",
+              "versionFunctions": true
+            },
+            "functions": {
+              "create": {
+                "handler": "handler.create",
+                "events": [
+                  {
+                    "http": {
+                      "path": "test-url",
+                      "method": "get"
+                    }
+                  }
+                ],
+                "name": "your-service-name-dev-create"
+              }
+            },
+            "resources": {
+              "Resources": {
+                "DogeBucket": {
+                  "Type": "AWS::S3::Bucket",
+                  "Properties": {
+                    "BucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10"
+                  }
+                }
+              },
+              "Outputs": {
+                "DogeBucketName": {
+                  "Value": {
+                    "Ref": "DogeBucket"
+                  },
+                  "Export": {
+                    "Name": "DogeBucketName"
+                  }
+                }
+              }
+            },
+            "custom": {
+              "s3Sync": [
+                {
+                  "bucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10",
+                  "localDir": "./"
+                }
+              ]
+            },
+            "plugins": [
+              "serverless-s3-sync"
+            ]
+          },
+          "configFileDirPath": "/Users/akshashe/Documents/Enterprise SW /lambda-workshop",
+          "config": {
+            "type": "sls"
+          },
+          "options": {
+            "function": "hello",
+            "path": "event.json"
+          },
+          "stage": "dev",
+          "dashboard": null,
+          "logger": {
+            "namespace": "s:core:resolver:sls",
+            "prefix": null,
+            "prefixColor": null
+          },
+          "_credentialsPromise": "<REDACTED>"
+        },
+        "resolvers": {}
+      }
+    },
+    "composeServiceName": null,
+    "servicePath": "/Users/akshashe/Documents/Enterprise SW /lambda-workshop",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "your-service-name",
+      "frameworkVersion": "4",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs18.x",
+        "stage": "dev",
+        "region": "us-east-1",
+        "versionFunctions": true
+      },
+      "functions": {
+        "create": {
+          "handler": "handler.create",
+          "events": [
+            {
+              "http": {
+                "path": "test-url",
+                "method": "get"
+              }
+            }
+          ],
+          "name": "your-service-name-dev-create"
+        }
+      },
+      "resources": {
+        "Resources": {
+          "DogeBucket": {
+            "Type": "AWS::S3::Bucket",
+            "Properties": {
+              "BucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10"
+            }
+          }
+        },
+        "Outputs": {
+          "DogeBucketName": {
+            "Value": {
+              "Ref": "DogeBucket"
+            },
+            "Export": {
+              "Name": "DogeBucketName"
+            }
+          }
+        }
+      },
+      "custom": {
+        "s3Sync": [
+          {
+            "bucketName": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10",
+            "localDir": "./"
+          }
+        ]
+      },
+      "plugins": [
+        "serverless-s3-sync"
+      ]
+    },
+    "serviceRawFile": "service: your-service-name\n\nframeworkVersion: '4'\n\nprovider:\n  name: aws\n  runtime: nodejs18.x\n  stage: ${opt:stage, 'dev'}\n  region: us-east-1\n\nfunctions:\n  create:\n    handler: handler.create\n    events:\n      - http:\n          path: test-url\n          method: get\n\nresources:\n  Resources:\n    DogeBucket:\n      Type: AWS::S3::Bucket\n      Properties:\n        BucketName: new-serverless-framework-deployments-us-east-1-4ca6f522-0f10   # Replace with your bucket name\n  Outputs:\n    DogeBucketName:\n      Value:\n        Ref: DogeBucket\n      Export:\n        Name: DogeBucketName\n\ncustom:\n  s3Sync:\n    - bucketName: new-serverless-framework-deployments-us-east-1-4ca6f522-0f10   # Replace with your bucket name\n      localDir: './'  # Ensure 'doge1.jpg' is in this directory\n\nplugins:\n  - serverless-s3-sync\n",
+    "command": [
+      "invoke"
+    ],
+    "options": {
+      "function": "hello",
+      "path": "event.json"
+    },
+    "error": {
+      "message": "Function \"hello\" doesn't exist in this Service",
+      "stack": "ServerlessError2: Function \"hello\" doesn't exist in this Service\n    at Service.getFunction (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:926:12898)\n    at AwsInvoke.extendedValidate (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:740:894)\n    at invoke:invoke (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:740:457)\n    at PluginManager.runHooks (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:925:9315)\n    at PluginManager.invoke (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:925:10091)\n    at async PluginManager.run (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:925:10811)\n    at async Serverless.run (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:932:10731)\n    at async runFramework (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:980:2821)\n    at async route (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:1010:14784)\n    at async Object.run2 [as run] (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:1010:15182)\n    at async run3 (file:///Users/akshashe/.serverless/releases/4.4.11/package/dist/sf-core.js:1010:16442)",
+      "code": "FUNCTION_MISSING_IN_SERVICE"
+    },
+    "params": {},
+    "machineId": "b0acbf3e195fa4bb308d48b4f5f10c53",
+    "stage": "dev",
+    "accessKeyV2": "<REDACTED>",
+    "accessKeyV1": "<REDACTED>",
+    "orgId": "c0e15445-41aa-4787-81a4-0a15df4b7643",
+    "orgName": "ananyapraveenshetty",
+    "userId": "4ZpRsh4hdY0WY08dZ5",
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "userName": "ananyapraveenshetty",
+    "subscription": null,
+    "userEmail": "ananyapraveen.shetty@sjsu.edu",
+    "serviceProviderAwsRegion": "us-east-1",
+    "serviceProviderAwsCredentials": "<REDACTED>",
+    "serviceProviderAwsAccountId": "992382397944",
+    "projectType": "traditional",
+    "versionSf": "4.4.11",
+    "serviceProviderAwsCfStackName": "your-service-name-dev",
+    "serviceUniqueId": "arn:aws:cloudformation:us-east-1:992382397944:stack/your-service-name-dev/ad280140-aad9-11ef-a35b-0e1933d4b5af",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:us-east-1:992382397944:stack/your-service-name-dev/ad280140-aad9-11ef-a35b-0e1933d4b5af",
+    "serviceProviderAwsCfStackCreated": "2024-11-25T03:02:16.283Z",
+    "serviceProviderAwsCfStackUpdated": "2024-11-25T06:50:12.979Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "CreateLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:us-east-1:992382397944:function:your-service-name-dev-create:3",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-your-service-name-dev-CreateLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "DogeBucketName",
+        "OutputValue": "new-serverless-framework-deployments-us-east-1-4ca6f522-0f10",
+        "ExportName": "DogeBucketName"
+      },
+      {
+        "OutputKey": "ServiceEndpoint",
+        "OutputValue": "https://nx50bw2z55.execute-api.us-east-1.amazonaws.com/dev",
+        "Description": "URL of the service endpoint",
+        "ExportName": "sls-your-service-name-dev-ServiceEndpoint"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-us-east-1-4ca6f522-0f10",
+        "ExportName": "sls-your-service-name-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}

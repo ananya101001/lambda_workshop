@@ -10,7 +10,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "^2.4.13",
-    "gm": "^1.23.0"
+    "@aws-sdk/client-s3": "^3.699.0",
+    "@aws-sdk/lib-storage": "^3.699.0",
+    "gm": "^1.23.0",
+    "serverless-s3-sync": "^3.3.0"
   }
 }

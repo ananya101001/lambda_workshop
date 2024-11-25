@@ -1,71 +1,77 @@
 'use strict';
-/* AWS Lambda ships with imageMagick out of the box */
-var gm = require('gm').subClass({ imageMagick: true }),
-    fs = require('fs'),
-    AWS = require('aws-sdk'),
-    s3 = new AWS.S3()
 
-var colors = [
-  "red",
-  "blue",
-  "yellow",
-  "green"
-]
-const maxFontSize = 28
-const minFontSize = 14
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import gm from 'gm';
+import fs from 'fs/promises';
 
-module.exports.create = (event, context, cb) => {
+const imageMagick = gm.subClass({ imageMagick: true });
+
+const colors = ["red", "blue", "yellow", "green"];
+const maxFontSize = 28;
+const minFontSize = 14;
+
+const s3Client = new S3Client({ region: "us-east-1" }); // Replace with your region
+
+export const create = async (event, context) => {
   try {
-    var dogerand = Math.floor(Math.random() * 4+1) 
-    var dogefile = `doge` + dogerand + `.jpg`
-    var image = gm(dogefile),
-        fileNum = Math.floor(Math.random() * 1000),
-        fileName = `/tmp/doge-${fileNum}.jpg`,
-        s3filename = `doge-${fileNum}.jpg`
+    const dogerand = Math.floor(Math.random() * 4 + 1);
+    const dogefile = `doge${dogerand}.jpg`;
+    const image = imageMagick(dogefile);
+    const fileNum = Math.floor(Math.random() * 1000);
+    const fileName = `/tmp/doge-${fileNum}.jpg`;
+    const s3filename = `doge-${fileNum}.jpg`;
 
-    image.size((err, value) => {
-      if (err) {
-        return cb(err, null)
-      }
-      var maxWidth = value.width,
-          maxHeight = value.height
+    const size = await new Promise((resolve, reject) => {
+      image.size((err, value) => {
+        if (err) reject(err);
+        else resolve(value);
+      });
+    });
 
-      for (var bird of event.queryStringParameters.text.split(" ")) {
-        var fontSize = Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize + 1),
-            x = Math.floor(Math.random() * (maxWidth - (fontSize * bird.length))),
-            y = Math.floor(Math.random() * (maxHeight - (fontSize * 2)) + fontSize),
-            color = colors[Math.floor(Math.random() * 4)]
+    const { width: maxWidth, height: maxHeight } = size;
 
-        image = image.fontSize(fontSize).fill(color).drawText(x, y, bird)
-      }
+    for (const bird of event.queryStringParameters.text.split(" ")) {
+      const fontSize = Math.floor(Math.random() * (maxFontSize - minFontSize) + minFontSize + 1);
+      const x = Math.floor(Math.random() * (maxWidth - (fontSize * bird.length)));
+      const y = Math.floor(Math.random() * (maxHeight - (fontSize * 2)) + fontSize);
+      const color = colors[Math.floor(Math.random() * colors.length)];
 
-      console.log("Writing file: ", fileName)
+      image.fontSize(fontSize).fill(color).drawText(x, y, bird);
+    }
+
+    console.log("Writing file: ", fileName);
+    await new Promise((resolve, reject) => {
       image.write(fileName, (err) => {
-        if (err) {
-          console.log("Error writing file: ", err)
-          return cb(err, image)
-        }
-        var imgdata = fs.readFileSync(fileName)
-        var s3params = {
-           Bucket: 'iopipe-workshop-doge-1',
-           Key: s3filename,
-           Body: imgdata,
-           ContentType: 'image/jpeg',
-           ACL: "public-read"
-        }
-        s3.putObject(s3params,
-          (err, obj) => {
-            cb(err, {
-              text: `<https://s3.amazonaws.com/${s3params.Bucket}/${s3filename}>`,
-              unfurl_links: true,
-              response_type: "in_channel"
-            })
-          }
-        )
+        if (err) reject(err);
+        else resolve();
+      });
+    });
+
+    const imgdata = await fs.readFile(fileName);
+    const s3params = {
+      Bucket: 'serverless-framework-deployments-us-east-1-4ca6f522-0f10', // Replace with your bucket name
+      Key: s3filename,
+      Body: imgdata,
+      ContentType: 'image/jpeg',
+      ACL: "public-read"
+    };
+
+    const command = new PutObjectCommand(s3params);
+    await s3Client.send(command);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        text: `<https://s3.amazonaws.com/${s3params.Bucket}/${s3filename}>`,
+        unfurl_links: true,
+        response_type: "in_channel"
       })
-    })
+    };
+  } catch (err) {
+    console.error("Error:", err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Internal Server Error" })
+    };
   }
-  catch (err) {
-    return cb(err, null)
-  }
-}
+};
